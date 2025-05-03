@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Pago con Stripe</title>
+    <script src="https://js.stripe.com/v3/"></script>
+    <style>
+        #card-element { margin: 10px 0; padding: 10px; border: 1px solid #ccc; }
+        button { background: #6772e5; color: white; border: none; padding: 10px; cursor: pointer; }
+        #amount { margin: 10px 0; padding: 10px; width: 100px; }
+    </style>
+</head>
+<body>
+    <h1>Payment with Fats API + Stripe</h1>
+    <form id="payment-form">
+        <input id="amount" type="number" min="1" step="1" placeholder="Monto en USD" required>
+        <div id="card-element"></div>
+        <button id="submit-button" type="submit">Pagar</button>
+        <p id="payment-status"></p>
+    </form>
+    <script type="module">
+        const STRIPE_PUBLIC_KEY = "{{ stripe_public_key }}";
+        import initPayment from "/static/hooks/script.js";
+        document.addEventListener("DOMContentLoaded", () => {
+            initPayment(STRIPE_PUBLIC_KEY);
+        });
+    </script>
+</body>
+</html>
