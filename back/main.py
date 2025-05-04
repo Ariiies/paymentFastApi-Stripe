@@ -3,7 +3,6 @@ from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.middleware.cors import CORSMiddleware
 from fastapi.templating import Jinja2Templates
-from fastapi.responses import FileResponse
 from pydantic import BaseModel
 import uvicorn, stripe, os
 from dotenv import load_dotenv
@@ -49,8 +48,9 @@ async def create_payment_intent(request: PaymentRequest):
         )
         print("se acredito el pago por: ",payment_intent.amount, "USD")
         return {"clientSecret": payment_intent.client_secret}
-    except Exception as e:
-        return {"error": str(e)}
+    except Exception as e: 
+        print("No se pudo acreditar el pago")
+        return {"Error": str(type(e).__name__)}
 
 if __name__ == "__main__":
     uvicorn.run("main:app", port=8000, reload=True)
